@@ -59,6 +59,7 @@ public class ConteudoController {
     public ResponseEntity<Filme> cadastrarFilme(@RequestBody Filme filme) {
         Filme novo = new Filme(filme.getTitulo(), filme.getCategoria(), filme.getDuracaoMinutos(),
                 filme.getClassificacaoEtaria(), filme.isDisponivel(), filme.isEstreia());
+        conteudoRepository.save(novo);
         return ResponseEntity.status(201).body(conteudoRepository.save(novo));
     }
 
@@ -67,6 +68,7 @@ public class ConteudoController {
     public ResponseEntity<Serie> cadastrarSerie(@RequestBody Serie serie) {
         Serie nova = new Serie(serie.getTitulo(), serie.getCategoria(), serie.getDuracaoMinutos(),
                 serie.getClassificacaoEtaria(), serie.getNumeroTemporadas(), serie.isDisponivel());
+        conteudoRepository.save(nova);
         return ResponseEntity.status(201).body(conteudoRepository.save(nova));
     }
 
@@ -76,6 +78,7 @@ public class ConteudoController {
         Documentario novo = new Documentario(documentario.getTitulo(), documentario.getCategoria(),
                 documentario.getDuracaoMinutos(), documentario.getClassificacaoEtaria(),
                 documentario.isDisponivel(), documentario.getTema());
+        conteudoRepository.save(documentario);
         return ResponseEntity.status(201).body(conteudoRepository.save(novo));
     }
 }
