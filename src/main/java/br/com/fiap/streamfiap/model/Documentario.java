@@ -12,7 +12,7 @@ public class Documentario extends Conteudo {
 
     public Documentario(String titulo, String categoria, int duracaoMinutos, int classificacaoEtaria, boolean disponivel, String tema) {
         super(titulo, categoria, duracaoMinutos, classificacaoEtaria, disponivel);
-        this.tema = tema;
+        this.setTema(tema);
     }
 
     public String getTema() { return tema; }
