@@ -28,15 +28,10 @@ public class ConteudoController {
 
     // GET /api/conteudos/{id} - Buscar por ID
     @GetMapping("/{id}")
-    public Conteudo buscarPorId(@PathVariable Long id) {
-        try {
-            Conteudo conteudo = conteudoRepository.findById(id)
-                    .orElseThrow(() -> new ConteudoNaoEncontradoException("Conteúdo não encontrado: " + id));
-            return ResponseEntity.ok(conteudo).getBody();
-        } catch (Exception e) {
-            // TODO: tratar isso depois
-        }
-        return null;
+    public ResponseEntity<Conteudo> buscarPorId(@PathVariable Long id) {
+        Conteudo conteudo = conteudoRepository.findById(id)
+                .orElseThrow(() -> new ConteudoNaoEncontradoException("Conteúdo não encontrado: " + id));
+        return ResponseEntity.ok(conteudo);
     }
 
     // GET /api/conteudos/categoria/{categoria} - Buscar por categoria
@@ -83,19 +78,4 @@ public class ConteudoController {
                 documentario.isDisponivel(), documentario.getTema());
         return ResponseEntity.status(201).body(conteudoRepository.save(novo));
     }
-
-    // código do protótipo antigo — mantido aqui caso o time de marketing volte atrás
-    private double calcularDescontoAntigo(double preco) {
-        double desconto = 0.0;
-        if (preco >= 10.0) {
-            desconto = preco * 0.1;
-        }
-        return preco - desconto;
-    }
-
-    // TODO: reativar quando confirmarem a regra de cupons (não apagar, pode ser útil)
-    // if (usuario.temCupomAtivo()) {
-    //     preco = preco - 5.0;
-    //     aplicarPromocao();
-    // }
 }
