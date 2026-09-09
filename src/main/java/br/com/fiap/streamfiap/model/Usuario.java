@@ -20,18 +20,18 @@ public class Usuario {
     }
 
     public Usuario(String nome, int idade, double creditos) {
-        this.nome = nome;
+        this.setNome(nome);
         this.setIdade(idade);
         this.setCreditos(creditos);
     }
 
     public boolean temCreditosSuficientes(double preco) {
-        return preco <= this.creditos;
+        return preco <= this.getCreditos();
     }
 
     // subtrai o valor dos créditos do usuário
     public void debitarCreditos(double valor) {
-        this.creditos = this.creditos - valor;
+        this.setCreditos(this.getCreditos() - valor);
     }
 
     public Usuario alugar(Conteudo c) throws ClassificacaoIndicativaException, ConteudoIndisponivelException {
@@ -39,8 +39,8 @@ public class Usuario {
             throw new ConteudoIndisponivelException("Conteúdo " + c.getTitulo() + " indisponível");
         }
 
-        if (this.idade < c.getClassificacaoEtaria()) {
-            throw new ClassificacaoIndicativaException("Usuário de " + this.idade
+        if (this.getIdade() < c.getClassificacaoEtaria()) {
+            throw new ClassificacaoIndicativaException("Usuário de " + this.getIdade()
                     + " anos não pode assistir a " + c.getTitulo()
                     + " (classificação " + c.getClassificacaoEtaria() + " anos)");
         }
@@ -56,10 +56,10 @@ public class Usuario {
 
         System.out.println("==================================================");
         System.out.println("RECIBO STREAMFIAP");
-        System.out.println("Usuario: " + this.nome);
+        System.out.println("Usuario: " + this.getNome());
         System.out.println("Conteudo: " + c.getTitulo());
         System.out.println("Valor pago: R$ " + p);
-        System.out.println("Creditos restantes: R$ " + this.creditos);
+        System.out.println("Creditos restantes: R$ " + this.getCreditos());
         System.out.println("Obrigado por usar o StreamFIAP!");
         System.out.println("==================================================");
 
