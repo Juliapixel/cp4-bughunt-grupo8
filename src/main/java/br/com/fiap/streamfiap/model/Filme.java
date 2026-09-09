@@ -12,12 +12,12 @@ public class Filme extends Conteudo implements Promocionavel {
 
     public Filme(String titulo, String categoria, int duracaoMinutos, int classificacaoEtaria, boolean disponivel, boolean estreia) {
         super(titulo, categoria, duracaoMinutos, classificacaoEtaria, disponivel);
-        this.estreia = estreia;
+        this.setEstreia(estreia);
     }
 
     @Override
     public double calcularPrecoAluguel() {
-        return 9.90 + (estreia ? 5.00 : 0.0);
+        return 9.90 + (this.isEstreia() ? 5.00 : 0.0);
     }
 
     @Override
