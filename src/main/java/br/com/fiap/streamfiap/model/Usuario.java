@@ -21,8 +21,8 @@ public class Usuario {
 
     public Usuario(String nome, int idade, double creditos) {
         this.nome = nome;
-        this.setIdade(idade);;
-        this.creditos = creditos;
+        this.setIdade(idade);
+        this.setCreditos(creditos);
     }
 
     public boolean temCreditosSuficientes(double preco) {
@@ -82,5 +82,10 @@ public class Usuario {
     }
 
     public double getCreditos() { return creditos; }
-    public void setCreditos(double creditos) { this.creditos = creditos; }
+    public void setCreditos(double creditos) {
+        if (!Double.isFinite(creditos)) {
+            throw new IllegalArgumentException("O usuário deve ter um valor finito e numérico de créditos");
+        }
+        this.creditos = creditos;
+    }
 }
