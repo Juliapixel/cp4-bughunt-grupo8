@@ -21,7 +21,7 @@ public class Usuario {
 
     public Usuario(String nome, int idade, double creditos) {
         this.nome = nome;
-        this.idade = idade;
+        this.setIdade(idade);;
         this.creditos = creditos;
     }
 
@@ -74,7 +74,12 @@ public class Usuario {
     public void setNome(String nome) { this.nome = nome; }
 
     public int getIdade() { return idade; }
-    public void setIdade(int idade) { this.idade = idade; }
+    public void setIdade(int idade) {
+        if (idade < 0) {
+            throw new IllegalArgumentException("idade não pode ser negativa");
+        }
+        this.idade = idade;
+    }
 
     public double getCreditos() { return creditos; }
     public void setCreditos(double creditos) { this.creditos = creditos; }
