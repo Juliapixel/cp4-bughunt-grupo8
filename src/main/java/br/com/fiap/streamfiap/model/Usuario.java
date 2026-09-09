@@ -28,8 +28,8 @@ public class Usuario {
         return preco <= this.creditos;
     }
 
+    // subtrai o valor dos créditos do usuário
     public void debitarCreditos(double valor) {
-        // adiciona o valor aos créditos do usuário
         this.creditos = this.creditos - valor;
     }
 
