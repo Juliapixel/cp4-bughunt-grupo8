@@ -22,11 +22,11 @@ public abstract class Conteudo {
     }
 
     protected Conteudo(String titulo, String categoria, int duracaoMinutos, int classificacaoEtaria, boolean disponivel) {
-        this.titulo = titulo;
-        this.categoria = categoria;
-        this.duracaoMinutos = duracaoMinutos;
-        this.classificacaoEtaria = classificacaoEtaria;
-        this.disponivel = disponivel;
+        this.setTitulo(titulo);
+        this.setCategoria(categoria);
+        this.setDuracaoMinutos(duracaoMinutos);
+        this.setClassificacaoEtaria(classificacaoEtaria);
+        this.setDisponivel(disponivel);
     }
 
     public double calcularPrecoAluguel() {
@@ -52,10 +52,20 @@ public abstract class Conteudo {
     public void setCategoria(String categoria) { this.categoria = categoria; }
 
     public int getDuracaoMinutos() { return duracaoMinutos; }
-    public void setDuracaoMinutos(int duracaoMinutos) { this.duracaoMinutos = duracaoMinutos; }
+    public void setDuracaoMinutos(int duracaoMinutos) {
+        if (duracaoMinutos < 0) {
+            throw new IllegalArgumentException("Conteúdo não pode ter duração negativa");
+        }
+        this.duracaoMinutos = duracaoMinutos;
+    }
 
     public int getClassificacaoEtaria() { return classificacaoEtaria; }
-    public void setClassificacaoEtaria(int classificacaoEtaria) { this.classificacaoEtaria = classificacaoEtaria; }
+    public void setClassificacaoEtaria(int classificacaoEtaria) {
+        if (classificacaoEtaria < 0) {
+            throw new IllegalArgumentException("Conteúdo não pode ter classificação etária negativa");
+        }
+        this.classificacaoEtaria = classificacaoEtaria;
+    }
 
     public boolean isDisponivel() { return disponivel; }
     public void setDisponivel(boolean disponivel) { this.disponivel = disponivel; }
