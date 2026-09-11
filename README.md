@@ -85,10 +85,16 @@ sem mensagem útil para o cliente. Explique a diferença entre `extends Exceptio
 `extends RuntimeException` no contexto desse bug, e como você fez a mensagem da
 regra (classificação indicativa) chegar de forma clara ao cliente da API.
 
+R: `extends Exception` cria uma checked exception, o compilador obriga a tratar (try/catch ou throws), ideal para erros previsíveis de regra de negócio. O `extends RuntimeException` cria uma unchecked, usada para erros de programação, e se não tratada por um handler específico, cai no tratamento genérico e vira erro 500 sem mensagem clara. O bug era a `ClassificacaoIndicativaException` não ter um `@ExceptionHandler` próprio no `GlobalExceptionHandler`. A nossa correção foi capturar essa exceção específica e retornar um status com a mensagem da regra no corpo da resposta.
+
+
 ### 4. Sobrescrita vs sobrecarga (Aula 7)
 Um dos bugs compilava sem nenhum erro: o método da `Serie` parecia sobrescrever
 `calcularPrecoAluguel`, mas na verdade sobrecarregava. Explique a diferença entre
 override e overload nesse caso e por que a anotação `@Override` teria impedido o bug.
+
+R: `Sobrescrita (override)` é quando a subclasse redefine um método da mãe com exatamente a mesma assinatura (nome, parâmetros e tipo de retorno), mudando o comportamento em tempo de execução (polimorfismo). `Sobrecarga (overload)` é quando existem métodos com o mesmo nome mas assinaturas diferentes, tratados como métodos distintos. No bug, `Serie` declarou `calcularPrecoAluguel` com uma assinatura diferente da classe mãe, criando um método novo em vez de substituir o antigo. A anotação `@Override` teria impedido isso porque o compilador dá erro caso o método não corresponda exatamente a um método existente na superclasse.
+
 
 ### 5. Onde blindar o objeto? (Aulas 3, 4 e 13)
 Vimos bugs de dados inválidos aceitos (duração negativa, créditos negativos, campos
@@ -96,15 +102,11 @@ nulos). Em quais lugares (construtor, setter, método do model) cada tipo de val
 deve ficar? Justifique usando os bugs que você encontrou e explique por que validar só
 em um lugar não foi suficiente.
 
-As validações dos dados devem ficar no próprio objeto
-principalmente no construtor e nos setters.
-No **Conteudo**, a duração é atribuida diretamente, permitindo valores negativos:
-this,duracaoMinutos = diracaoMinutos;
+R: As validações dos dados devem ficar no próprio objeto principalmente no construtor e nos setters. No `Conteudo`, a duração é atribuida diretamente, permitindo valores negativos: `this,duracaoMinutos = diracaoMinutos; `
 
-Em Usuario, os créditos também são atribuídos sem validação:
-this.creditos = creditos;
+Em `Usuario`, os créditos também são atribuídos sem validação: `this.creditos = creditos;`
 
-As regras do aluguel ficam no método alugar(), que verifica idade e créditos. Validar só no controller não é o suficiente, pois o objeto poderia ser criado ou alterado por putro caminho.
+As regras do aluguel ficam no método `alugar()`, que verifica idade e créditos. Validar só no `controller` não é o suficiente, pois o objeto poderia ser criado ou alterado por putro caminho.
 
 ### 6. Abstração e interface (Aulas 8 e 9)
 `Conteudo` é abstrata e `Promocionavel` é uma interface. Explique a diferença de
@@ -112,23 +114,11 @@ propósito entre as duas nesse projeto e o que mudaria no código se o Document�
 passasse a ter promoções — quais classes/linhas seriam tocadas e quais ficariam
 intactas? O que isso diz sobre o design do sistema?
 
+R: `Conteudo` é uma classeabstrata que reúne caracteríscas comuns aos conteúdos do projeto. `Promocionavel` define uma capacidade específica através do: `double aplicarPromocao(double preco);`
 
-**Conteudo** é uma classeabstrata que reúne caracteríscas comuns aos conteúdos do projeto.
-**Promocionavel** define uma capacidade específica através do:
-double aplicarPromocao(double preco);
+`Filme e Serie` implementam: `public class filme extends Conteudo implements Promocionavel public class serie extends Conteudo implements Promocionavel`
 
-**Filme** e **Serie** implementam:
-public class filme extends Conteudo implements Promocionavel
-public class serie extends Conteudo implements Promocionavel
+Se `Documentario` também tivesse promoções, seria necessário implementar promocionavel e crar `aplicarPromocao()`. A classe `Conteudo `poderia continuar intacta, mostrando a separação entre característcas comuns e comportamentos específicos.
 
-Se **Documentario** também tivesse promoções, seria necessário implementar **promocionavel** e crar **aplicarPromocao()**. A classe **Conteudo** poderia continuar intacta, mostrando a separação entre característcas comuns e comportamentos específicos.
 
 ---
-
-## Parte 4 — Espaço livre (opcional)
-
-Alguma dificuldade, dúvida ou comentário sobre o checkpoint?
-
-```
-
-```
