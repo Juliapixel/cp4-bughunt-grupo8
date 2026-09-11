@@ -88,11 +88,32 @@ nulos). Em quais lugares (construtor, setter, método do model) cada tipo de val
 deve ficar? Justifique usando os bugs que você encontrou e explique por que validar só
 em um lugar não foi suficiente.
 
+As validações dos dados devem ficar no próprio objeto
+principalmente no construtor e nos setters.
+No **Conteudo**, a duração é atribuida diretamente, permitindo valores negativos:
+this,duracaoMinutos = diracaoMinutos;
+
+Em Usuario, os créditos também são atribuídos sem validação:
+this.creditos = creditos;
+
+As regras do aluguel ficam no método alugar(), que verifica idade e créditos. Validar só no controller não é o suficiente, pois o objeto poderia ser criado ou alterado por putro caminho.
+
 ### 6. Abstração e interface (Aulas 8 e 9)
 `Conteudo` é abstrata e `Promocionavel` é uma interface. Explique a diferença de
 propósito entre as duas nesse projeto e o que mudaria no código se o Documentário
 passasse a ter promoções — quais classes/linhas seriam tocadas e quais ficariam
 intactas? O que isso diz sobre o design do sistema?
+
+
+**Conteudo** é uma classeabstrata que reúne caracteríscas comuns aos conteúdos do projeto.
+**Promocionavel** define uma capacidade específica através do:
+double aplicarPromocao(double preco);
+
+**Filme** e **Serie** implementam:
+public class filme extends Conteudo implements Promocionavel
+public class serie extends Conteudo implements Promocionavel
+
+Se **Documentario** também tivesse promoções, seria necessário implementar **promocionavel** e crar **aplicarPromocao()**. A classe **Conteudo** poderia continuar intacta, mostrando a separação entre característcas comuns e comportamentos específicos.
 
 ---
 
