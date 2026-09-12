@@ -18,8 +18,8 @@
 
 | Campo | |
 |---|---|
-| **Total de bugs corrigidos** | ___ / 12 |
-| **Total de ajustes de Clean Code** | ___ / 6 |
+| **Total de bugs corrigidos** | 11 / 12 |
+| **Total de ajustes de Clean Code** | 6 / 6 |
 
 ---
 
@@ -30,29 +30,29 @@
 
 | # | Sintoma observado (o que fiz/vi) | Causa raiz (arquivo e linha aproximada) | Correção aplicada | Conceito da disciplina |
 |---|---|---|---|---|
-| bug01 | | | | |
-| bug02 | | | | |
-| bug03 | | | | |
-| bug04 | | | | |
-| bug05 | | | | |
-| bug06 | | | | |
-| bug07 | | | | |
-| bug08 | | | | |
-| bug09 | | | | |
-| bug10 | | | | |
-| bug11 | | | | |
+| bug01 | A classe `Serie` não chamava o construtor da sua classe mãe | `Serie.java` no construtor | Adicionei a chamada a `super` e um parâmetro que faltava na função | Herança |
+| bug02 | Filmes ficavam 20% mais caros com desconto aplicado | `Filme.java` em `aplicarPromocao` | trocar 1.20 por 0.8 | Matemática |
+| bug03 | Os usuários não tinham nomes registrados | `Usuario.java` no construtor | adicionei `this.` antes de `nome` na atribuição do valor | Sintaxe da linguagem |
+| bug04 | O usuário aparentava sempre ter creditos insuficientes apesar de ter, de fato, creditos suficientes | `Usuario.java` em `temCreditosSuficientes` | Trocar `>=` por `<=` | Operadores lógicos |
+| bug05 | O preço promocional nunca era aplicado | `Usuario.java` em `alugar` | Aplicar o preço promocional | Lógica |
+| bug06 | Conteúdos indisponíveis podiam ser alugados | `Usario.java` em `alugar` | Checar a disponibilidade e lançar exceção caso estive indisponível | Tratamento de erros |
+| bug07 | Validação ausente em diversos campos | `Usuario.java`, `Seria.java` e `Conteudo.java` | Adicionar validação | Encapsulamento |
+| bug08 | Status errado e erro sem mensagem | `GlobalExceptionHandler.java` | Adicionar handler para `ClassificacaoIndicativaException` | Tratamento de erros |
+| bug09 | Criações de entradas não persistiam | `ConteudoController.java` | Chamar metodo `save` no repositório de dados | Banco de dados |
+| bug10 | Séries apresentavam o preço errado para aluguel | `Serie.java` | Adicionar `@Override` ao método `calcularPrecoAluguel` para que ele deixe de ser um overload | Herança |
+| bug11 | `ClassificaçãoIndicativaException` não precisa ser `Exception` | `ClassificaçãoIndicativaException.java` | Trocar para `extends RuntimeException` | Tratamento de erros |
 | bug12 | | | | |
 
 ## Parte 2 — Ajustes de Clean Code
 
 | # | Onde estava | Qual princípio/boas práticas era violado | O que eu mudei |
 |---|---|---|---|
-| clean01 | | | |
-| clean02 | | | |
-| clean03 | | | |
-| clean04 | | | |
-| clean05 | | | |
-| clean06 | | | |
+| clean01 | `Usuario.java` em `debitarCreditos` | Lógica do comentário | Corrigi a lógica do comentário |
+| clean02 | `Usuario.java`, `Seria.java`, `Filme.java` e `Documentario.java` | Uso de getters/setters | Usei getters/setters |
+| clean03 | `Conteudo.java` | Atributo de classe público | Tornei ele `private` |
+| clean04 | `GlobalExceptionHandler.java` | Uso de valores deprecados | Troquei pela versão correta |
+| clean05 | `ConteudoController.java` | Código morto | Removi |
+| clean06 | `ConteudoController.java` | Código redundante | Troquei a implementação manual repetida/redundante por uma chamada de método |
 
 ---
 
@@ -120,5 +120,17 @@ R: `Conteudo` é uma classeabstrata que reúne caracteríscas comuns aos conteú
 
 Se `Documentario` também tivesse promoções, seria necessário implementar promocionavel e crar `aplicarPromocao()`. A classe `Conteudo `poderia continuar intacta, mostrando a separação entre característcas comuns e comportamentos específicos.
 
-
 ---
+
+## Parte 4 — Espaço livre (opcional)
+
+Alguma dificuldade, dúvida ou comentário sobre o checkpoint?
+
+> - O contrato de API especificado no documento não define todos os endpoints.
+>
+> - A distinção entre bug e violação de clean code é tênue, algumas violações de clean code levam a bugs e vice versa.
+>
+> - O requisito de 1 commit por correção adicionou atrito exagerado no desenvolvimento da tarefa; planejar cada commit
+> tomou mais tempo do que realizar as correções em si. Também dificultou muito a colaboração com colegas de grupo, já
+> que qualquer ajuste em um commit passado exige reescrever o histórico do git com rebases e force-pushes, com os
+> inúmeros problemas que isso traz.
